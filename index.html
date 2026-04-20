@@ -3,19 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chúc Mừng Sinh Nhật Mẹ Yêu!</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+    <title>Sắp đến sinh nhật Mẹ rồi!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         body {
             margin: 0;
             padding: 0;
+            font-family: 'Quicksand', sans-serif;
+            overflow: hidden;
+            background: #fff9ef; /* Màu nền vàng nhạt giống ảnh */
+        }
+
+        /* ================= MÀN HÌNH ĐẾM NGƯỢC ================= */
+        #countdown-screen {
             display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100%;
+            text-align: center;
+            position: relative;
+        }
+
+        .countdown-title {
+            color: #d84315; /* Màu cam đậm */
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 2rem;
+            line-height: 1.2;
+            text-transform: uppercase;
+        }
+
+        .timer-container {
+            display: flex;
+            gap: 10px;
+            background: #4db6ac; /* Màu nền khung đếm ngược */
+            padding: 20px 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .time-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .time-box span {
+            background: #00796b; /* Màu ô vuông chứa số */
+            color: white;
+            font-size: 3.5rem;
+            font-weight: bold;
+            padding: 15px 20px;
+            border-radius: 12px;
+            min-width: 70px;
+            box-shadow: inset 0 -4px 0 rgba(0,0,0,0.2);
+        }
+
+        .time-box p {
+            color: white;
+            margin: 10px 0 0 0;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        /* ================= MÀN HÌNH CHÚC MỪNG (Ẩn lúc đầu) ================= */
+        #main-screen {
+            display: none; /* Ẩn đi chờ hết giờ */
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            width: 100%;
             background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%);
-            font-family: 'Quicksand', sans-serif;
-            overflow: hidden;
         }
 
         .card {
@@ -27,7 +87,6 @@
             max-width: 400px;
             width: 90%;
             z-index: 10;
-            position: relative;
         }
 
         h1 {
@@ -35,7 +94,6 @@
             color: #d81b60;
             font-size: 2.8rem;
             margin-bottom: 1rem;
-            /* Hiệu ứng chữ phát sáng nhấp nháy */
             animation: glow 2s ease-in-out infinite alternate;
         }
 
@@ -55,7 +113,6 @@
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            /* Hiệu ứng khung ảnh nhịp đập */
             animation: pulse 2s infinite;
         }
 
@@ -65,13 +122,8 @@
             100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(248, 187, 208, 0); }
         }
 
-        .photo-placeholder img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        p { color: #555; line-height: 1.6; font-size: 1.1rem; }
+        .photo-placeholder img { width: 100%; height: 100%; object-fit: cover; }
+        .card p { color: #555; line-height: 1.6; font-size: 1.1rem; }
 
         .btn {
             background: #d81b60;
@@ -86,7 +138,6 @@
             font-weight: bold;
             box-shadow: 0 4px 15px rgba(216, 27, 96, 0.4);
         }
-
         .btn:hover { background: #ad1457; transform: scale(1.05); }
 
         #hidden-message {
@@ -102,13 +153,7 @@
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Hiệu ứng trái tim và bóng bay */
-        .heart, .balloon {
-            position: absolute;
-            z-index: 1;
-            opacity: 0;
-        }
-
+        .heart, .balloon { position: absolute; z-index: 1; opacity: 0; }
         .heart { font-size: 25px; animation: flyUpHeart 3s linear infinite; }
         .balloon { animation: flyUpBalloon 5s linear forwards; }
 
@@ -116,7 +161,6 @@
             0% { transform: translateY(100vh) scale(0.5); opacity: 1; }
             100% { transform: translateY(-20vh) scale(1.5); opacity: 0; }
         }
-
         @keyframes flyUpBalloon {
             0% { transform: translateY(100vh) rotate(-10deg); opacity: 1; }
             50% { transform: translateY(30vh) rotate(10deg); }
@@ -128,32 +172,90 @@
 
     <audio id="bg-music" src="nhac-me.mp3"></audio>
 
-    <div class="card">
-        <div class="photo-placeholder">
-            <img src="z7744906306701_981450dd155a24cb1dc941f4c3649e4c.jpg">
-        </div>
-        <h1>Chúc Mừng Sinh Nhật Mẹ!</h1>
-        <p>Chúc người phụ nữ tuyệt vời nhất đời con luôn mạnh khỏe, vui vẻ và hạnh phúc bên gia đình mình mẹ nhé!</p>
+    <div id="countdown-screen">
+        <div class="countdown-title">ĐẾM NGƯỢC<br>SINH NHẬT</div>
         
-        <button class="btn" onclick="showMessage()">Nhấn vào đây mẹ nhé ❤️</button>
+        <div class="timer-container">
+            <div class="time-box">
+                <span id="days">00</span>
+                <p>NGÀY</p>
+            </div>
+            <div class="time-box">
+                <span id="hours">00</span>
+                <p>GIỜ</p>
+            </div>
+            <div class="time-box">
+                <span id="minutes">00</span>
+                <p>PHÚT</p>
+            </div>
+            <div class="time-box">
+                <span id="seconds">00</span>
+                <p>GIÂY</p>
+            </div>
+        </div>
+    </div>
 
-        <div id="hidden-message">
-            Con cảm ơn mẹ vì tất cả những hy sinh và tình yêu thương mẹ dành cho con. Con yêu mẹ rất nhiều!
+    <div id="main-screen">
+        <div class="card">
+            <div class="photo-placeholder">
+                <img src="anh-me.jpg" alt="Ảnh Mẹ Yêu">
+            </div>
+            <h1>Chúc Mừng Sinh Nhật Mẹ!</h1>
+            <p>Chúc người phụ nữ tuyệt vời nhất đời con luôn mạnh khỏe, vui vẻ và hạnh phúc bên gia đình mình mẹ nhé!</p>
+            
+            <button class="btn" onclick="showMessage()">Nhấn vào đây mẹ nhé ❤️</button>
+
+            <div id="hidden-message">
+                Con cảm ơn mẹ vì tất cả những hy sinh và tình yêu thương mẹ dành cho con. Con yêu mẹ rất nhiều!
+            </div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <script>
+        // CÀI ĐẶT THỜI GIAN ĐÍCH: 12 giờ trưa, ngày 28 tháng 4 năm 2026
+        // Cấu trúc tiếng Anh: "Month DD, YYYY HH:MM:SS"
+        const countDownDate = new Date("April 28, 2026 12:00:00").getTime();
+
+        // Hàm cập nhật thời gian mỗi 1 giây
+        const x = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = countDownDate - now;
+
+            // Nếu thời gian đếm ngược vẫn còn
+            if (distance > 0) {
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                // Thêm số 0 ở trước nếu số nhỏ hơn 10 (ví dụ: 09 thay vì 9)
+                document.getElementById("days").innerHTML = days < 10 ? "0" + days : days;
+                document.getElementById("hours").innerHTML = hours < 10 ? "0" + hours : hours;
+                document.getElementById("minutes").innerHTML = minutes < 10 ? "0" + minutes : minutes;
+                document.getElementById("seconds").innerHTML = seconds < 10 ? "0" + seconds : seconds;
+            } 
+            // Nếu đã tới giờ (đếm ngược về 0)
+            else {
+                clearInterval(x);
+                // Ẩn màn hình đếm ngược
+                document.getElementById("countdown-screen").style.display = "none";
+                // Hiện màn hình chúc mừng
+                document.getElementById("main-screen").style.display = "flex";
+                
+                // Đổi màu nền của body (để khớp với màn hình chúc mừng)
+                document.body.style.background = "linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%)";
+            }
+        }, 1000);
+
+        // HÀM HIỂN THỊ LỜI CHÚC VÀ NHẠC
         function showMessage() {
-            // Phát nhạc nền
             var audio = document.getElementById("bg-music");
             audio.play();
 
-            // Hiển thị lời chúc ẩn và ẩn nút bấm đi
             document.getElementById('hidden-message').style.display = 'block';
             document.querySelector('.btn').style.display = 'none';
             
-            // Bắn pháo giấy rực rỡ hơn
             var duration = 3 * 1000;
             var animationEnd = Date.now() + duration;
             var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
@@ -166,10 +268,7 @@
                 confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
             }, 250);
 
-            // Tạo trái tim bay
             for(let i=0; i<15; i++) { setTimeout(createHeart, i * 200); }
-
-            // Tạo bóng bay
             for(let i=0; i<10; i++) { setTimeout(createBalloon, i * 300); }
         }
 
