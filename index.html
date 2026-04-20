@@ -11,19 +11,30 @@
             padding: 0;
             font-family: 'Quicksand', sans-serif;
             overflow: hidden;
-            background: #fff9ef; /* Màu nền vàng nhạt giống ảnh */
+            background: #fff9ef url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgdmlld0JveD0iMCAwIDQwIDQwIj48Z2lkPSJkZWNvcmF0aW9uLXByaW50IiBvcGFjaXR5PSIwLjA1Ij48Y2lyY2xlIGN4PSI1IiBjeT0iNSIgcj0iMSIgZmlsbD0iI2Q4NDMxNSIvPjxjaXJjYGUgY3g9IjEwIiBjeT0iMTAiIHI9IjEuMiIgZmlsbD0iI2Q4NDMxNSIvPjxjaXJjYGUgY3g9IjI1IiBjeT0iNSIgcj0iMiIgZmlsbD0iIzRkYjZhYyIvPjxjaXJjYGUgY3g9IjM1IiBjeT0iMzUiIHI9IjAuOCIgZmlsbD0iIzRkYjZhYyIvPjxjaXJjYGUgY3g9IjMiIGN5PSIyNyIgcj0iMS41IiBmaWxsPSIjZjliODI1Ii8+PHJlY3QgeD0iMTAiIHk9IjI1IiB3aWR0aD0iNCIgaGVpZ2h0PSI0IiByeD0iMC41IiByeT0iMC41IiBmaWxsPSIjZjliODI1Ii8+PC9nPjwvc3ZnPg==') repeat;
+            /* Màu nền vàng nhạt với họa tiết confetti chìm */
         }
 
-        /* ================= MÀN HÌNH ĐẾM NGƯỢC ================= */
+        /* ================= MÀN HÌNH ĐẾM NGƯỢC (ĐÃ ĐƯỢC TRANG TRÍ) ================= */
         #countdown-screen {
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
             width: 100%;
             text-align: center;
             position: relative;
+        }
+
+        /* Khung nội dung chính để tạo viền xanh */
+        .countdown-main-content {
+            background: rgba(255, 255, 255, 0.85); /* Nền trắng trong suốt */
+            border: 10px solid #4db6ac;
+            border-radius: 20px;
+            padding: 40px;
+            position: relative;
+            z-index: 10;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
         }
 
         .countdown-title {
@@ -37,11 +48,8 @@
 
         .timer-container {
             display: flex;
-            gap: 10px;
-            background: #4db6ac; /* Màu nền khung đếm ngược */
-            padding: 20px 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            gap: 15px;
+            justify-content: center;
         }
 
         .time-box {
@@ -51,26 +59,75 @@
         }
 
         .time-box span {
-            background: #00796b; /* Màu ô vuông chứa số */
+            background: #00796b; /* Màu ô vuông chứa số xanh teal */
             color: white;
-            font-size: 3.5rem;
+            font-size: 4rem;
             font-weight: bold;
-            padding: 15px 20px;
+            padding: 20px 25px;
             border-radius: 12px;
-            min-width: 70px;
+            min-width: 80px;
             box-shadow: inset 0 -4px 0 rgba(0,0,0,0.2);
+            text-shadow: 0 2px 0 rgba(0,0,0,0.3);
         }
 
         .time-box p {
-            color: white;
+            color: #4db6ac; /* Màu chữ xanh */
             margin: 10px 0 0 0;
-            font-size: 1rem;
+            font-size: 1.1rem;
             font-weight: bold;
+        }
+
+        /* == HÌNH VẼ TRANG TRÍ (CHÈN SVG TRỰC TIẾP) == */
+        .decorative-item {
+            position: absolute;
+            z-index: 1;
+        }
+        
+        .balloon-group-left {
+            top: 5%;
+            left: 5%;
+            font-size: 80px;
+            animation: floatBalloon 6s ease-in-out infinite;
+        }
+
+        .cake-icon {
+            bottom: 5%;
+            left: 5%;
+            width: 120px;
+            height: 120px;
+        }
+
+        .gift-icon {
+            bottom: 5%;
+            right: 5%;
+            width: 120px;
+            height: 120px;
+            animation: pulseIcon 3s infinite;
+        }
+        
+        @keyframes floatBalloon {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
+        }
+
+        @keyframes pulseIcon {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.9; }
+        }
+
+        /* == Họa tiết pháo giấy chìm cho viền nền == */
+        .confetti-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 5;
+            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgdmlld0JveD0iMCAwIDQwIDQwIj48Zz5jaXJjYGUgY3g9IjEwIiBjeT0iMTAiIHI9IjEiIGZpbGw9IiNkODQzMTUiLz48Y2lyY2xlIGN4PSIyMCIgY3k9IjIwIiByPSIwLjgiIGZpbGw9IiM0ZGI2YWMiLz48cmVjdCB4PSIzMCIgeT0iMTAiIHdpZHRoPSI0IiByPSIyIiByeD0iMC41IiByeT0iMC41IiBmaWxsPSIjZjliODI1Ii8+PHJlY3QgeD0iMTAiIHk9IjMwIiB3aWR0aD0iNCIgaGVpZ2h0PSIxIiByeD0iMC41IiByeT0iMC41IiBmaWxsPSIjZjliODI1Ii8+PC9nPjwvc3ZnPg==') repeat;
+            opacity: 0.15;
         }
 
         /* ================= MÀN HÌNH CHÚC MỪNG (Ẩn lúc đầu) ================= */
         #main-screen {
-            display: none; /* Ẩn đi chờ hết giờ */
+            display: none;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
@@ -173,24 +230,30 @@
     <audio id="bg-music" src="nhac-me.mp3"></audio>
 
     <div id="countdown-screen">
-        <div class="countdown-title">ĐẾM NGƯỢC<br>SINH NHẬT</div>
-        
-        <div class="timer-container">
-            <div class="time-box">
-                <span id="days">00</span>
-                <p>NGÀY</p>
-            </div>
-            <div class="time-box">
-                <span id="hours">00</span>
-                <p>GIỜ</p>
-            </div>
-            <div class="time-box">
-                <span id="minutes">00</span>
-                <p>PHÚT</p>
-            </div>
-            <div class="time-box">
-                <span id="seconds">00</span>
-                <p>GIÂY</p>
+        <div class="confetti-overlay"></div> <div class="decorative-item balloon-group-left">🎈</div>
+        <svg class="decorative-item cake-icon" viewBox="0 0 100 100"><g fill="#f9b825"><rect x="25" y="60" width="50" height="30" rx="3"/><circle cx="50" cy="50" r="10"/></g><path d="M50 40a10 10 0 1 1 0 20v-20z" fill="#d84315"/><path d="M50 40a10 10 0 1 0 0 20V40z" fill="#fce4ec"/><ellipse cx="50" cy="60" rx="25" ry="10" fill="#f8bbd0"/><g fill="#00796b"><path d="M30 40c0-5 20-5 20 0S30 45 30 40z"/><path d="M50 40c0-5 20-5 20 0s-20 5-20 0z"/></g></svg>
+        <svg class="decorative-item gift-icon" viewBox="0 0 100 100"><g fill="#00796b"><rect x="10" y="30" width="80" height="60" rx="5"/><rect x="10" y="55" width="80" height="10"/></g><g fill="#f9b825"><rect x="45" y="30" width="10" height="60"/><path d="M50 30s10-20 20-10S55 35 50 30zM50 30s-10-20-20-10 15 25 20 10z"/></g></svg>
+
+        <div class="countdown-main-content">
+            <div class="countdown-title">ĐẾM NGƯỢC<br>SINH NHẬT MẸ</div>
+            
+            <div class="timer-container">
+                <div class="time-box">
+                    <span id="days">00</span>
+                    <p>NGÀY</p>
+                </div>
+                <div class="time-box">
+                    <span id="hours">00</span>
+                    <p>GIỜ</p>
+                </div>
+                <div class="time-box">
+                    <span id="minutes">00</span>
+                    <p>PHÚT</p>
+                </div>
+                <div class="time-box">
+                    <span id="seconds">00</span>
+                    <p>GIÂY</p>
+                </div>
             </div>
         </div>
     </div>
@@ -214,41 +277,33 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <script>
         // CÀI ĐẶT THỜI GIAN ĐÍCH: 12 giờ trưa, ngày 28 tháng 4 năm 2026
-        // Cấu trúc tiếng Anh: "Month DD, YYYY HH:MM:SS"
-        const countDownDate = new Date("April 20, 2026 20:38:00").getTime();
+        // Thiết lập thời gian đếm ngược chỉ 5 giây tính từ lúc mở web
+        const countDownDate = new Date().getTime() + 5000;
 
-        // Hàm cập nhật thời gian mỗi 1 giây
         const x = setInterval(function() {
             const now = new Date().getTime();
             const distance = countDownDate - now;
 
-            // Nếu thời gian đếm ngược vẫn còn
             if (distance > 0) {
                 const days = Math.floor(distance / (1000 * 60 * 60 * 24));
                 const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-                // Thêm số 0 ở trước nếu số nhỏ hơn 10 (ví dụ: 09 thay vì 9)
                 document.getElementById("days").innerHTML = days < 10 ? "0" + days : days;
                 document.getElementById("hours").innerHTML = hours < 10 ? "0" + hours : hours;
                 document.getElementById("minutes").innerHTML = minutes < 10 ? "0" + minutes : minutes;
                 document.getElementById("seconds").innerHTML = seconds < 10 ? "0" + seconds : seconds;
             } 
-            // Nếu đã tới giờ (đếm ngược về 0)
             else {
                 clearInterval(x);
-                // Ẩn màn hình đếm ngược
+                // CHUYỂN TRANG
                 document.getElementById("countdown-screen").style.display = "none";
-                // Hiện màn hình chúc mừng
                 document.getElementById("main-screen").style.display = "flex";
-                
-                // Đổi màu nền của body (để khớp với màn hình chúc mừng)
                 document.body.style.background = "linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%)";
             }
         }, 1000);
 
-        // HÀM HIỂN THỊ LỜI CHÚC VÀ NHẠC
         function showMessage() {
             var audio = document.getElementById("bg-music");
             audio.play();
