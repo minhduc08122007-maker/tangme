@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
@@ -11,11 +10,11 @@
             padding: 0;
             font-family: 'Quicksand', sans-serif;
             overflow: hidden;
-            background: #fff9ef url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgdmlld0JveD0iMCAwIDQwIDQwIj48Z2lkPSJkZWNvcmF0aW9uLXByaW50IiBvcGFjaXR5PSIwLjA1Ij48Y2lyY2xlIGN4PSI1IiBjeT0iNSIgcj0iMSIgZmlsbD0iI2Q4NDMxNSIvPjxjaXJjYGUgY3g9IjEwIiBjeT0iMTAiIHI9IjEuMiIgZmlsbD0iI2Q4NDMxNSIvPjxjaXJjYGUgY3g9IjI1IiBjeT0iNSIgcj0iMiIgZmlsbD0iIzRkYjZhYyIvPjxjaXJjYGUgY3g9IjM1IiBjeT0iMzUiIHI9IjAuOCIgZmlsbD0iIzRkYjZhYyIvPjxjaXJjYGUgY3g9IjMiIGN5PSIyNyIgcj0iMS41IiBmaWxsPSIjZjliODI1Ii8+PHJlY3QgeD0iMTAiIHk9IjI1IiB3aWR0aD0iNCIgaGVpZ2h0PSI0IiByeD0iMC41IiByeT0iMC41IiBmaWxsPSIjZjliODI1Ii8+PC9nPjwvc3ZnPg==') repeat;
-            /* Màu nền vàng nhạt với họa tiết confetti chìm */
+            /* == THAY ĐỔI 1: MÀU NỀN VÀNG SỮA NHẸ NHÀNG == */
+            background-color: #fffdf5; /* Milk Color nhẹ nhàng */
         }
 
-        /* ================= MÀN HÌNH ĐẾM NGƯỢC (ĐÃ ĐƯỢC TRANG TRÍ) ================= */
+        /* ================= MÀN HÌNH ĐẾM NGƯỢC: CƠN MƯA TRÁI TIM & BÁNH SINH NHẬT ================= */
         #countdown-screen {
             display: flex;
             justify-content: center;
@@ -26,29 +25,73 @@
             position: relative;
         }
 
-        /* Khung nội dung chính để tạo viền xanh */
-        .countdown-main-content {
-            background: rgba(255, 255, 255, 0.85); /* Nền trắng trong suốt */
-            border: 10px solid #4db6ac;
-            border-radius: 20px;
-            padding: 40px;
+        /* == THAY ĐỔI 2: VIỀN KHUNG BIẾN THÀNH BÁNH SINH NHẬT 3 TẦNG == */
+        .cake-frame {
             position: relative;
-            z-index: 10;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            z-index: 20; /* Trên nền và trên trái tim rơi */
+            padding-bottom: 20px;
         }
 
+        /* Tầng 3 (Tầng trên cùng chứa nến) */
+        .cake-tier-3 {
+            background-color: #f8bbd0; /* Màu kem hồng */
+            border: 8px solid #d81b60; /* Viền hồng đậm */
+            border-bottom: none;
+            border-radius: 15px 15px 0 0;
+            padding: 15px;
+            width: 250px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        /* Tầng 2 (Tầng giữa) */
+        .cake-tier-2 {
+            background-color: white; /* Màu kem trắng sữa */
+            border: 8px solid #d81b60; /* Viền hồng đậm */
+            border-bottom: none;
+            width: 320px;
+            margin: -5px auto 0; /* Gối lên tầng 3 */
+            padding: 10px;
+        }
+
+        /* Tầng 1 (Tầng dưới cùng chứa số đếm) */
+        .cake-tier-1 {
+            background-color: #fce4ec; /* Màu kem hồng nhạt */
+            border: 8px solid #d81b60; /* Viền hồng đậm */
+            border-radius: 0 0 15px 15px;
+            width: 380px;
+            margin: -5px auto 0; /* Gối lên tầng 2 */
+            padding: 25px 15px;
+            box-shadow: 0 15px 35px rgba(216, 27, 96, 0.3);
+        }
+
+        /* Nến trang trí trên tầng 3 */
+        .candles-group {
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+        }
+        .candle {
+            font-size: 35px;
+            animation: candleFlicker 1.5s ease-in-out infinite alternate;
+        }
+        @keyframes candleFlicker { from { transform: scale(1); opacity: 0.9; } to { transform: scale(1.1); opacity: 1; } }
+
         .countdown-title {
-            color: #d84315; /* Màu cam đậm */
-            font-size: 3.5rem;
-            font-weight: 900;
-            margin-bottom: 2rem;
-            line-height: 1.2;
-            text-transform: uppercase;
+            color: #d81b60; /* Màu hồng đậm */
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            margin-top: -10px;
         }
 
         .timer-container {
             display: flex;
-            gap: 15px;
+            gap: 10px;
             justify-content: center;
         }
 
@@ -59,70 +102,45 @@
         }
 
         .time-box span {
-            background: #00796b; /* Màu ô vuông chứa số xanh teal */
+            /* == THAY ĐỔI 3: Ô SỐ ĐƯỢC CHỈNH LẠI MÀU CHO HỢP BÁNH == */
+            background: #d81b60; /* Màu hồng đậm lấp đầy số */
             color: white;
-            font-size: 4rem;
+            font-size: 3.5rem;
             font-weight: bold;
-            padding: 20px 25px;
+            padding: 15px 20px;
             border-radius: 12px;
-            min-width: 80px;
+            min-width: 70px;
             box-shadow: inset 0 -4px 0 rgba(0,0,0,0.2);
             text-shadow: 0 2px 0 rgba(0,0,0,0.3);
         }
 
         .time-box p {
-            color: #4db6ac; /* Màu chữ xanh */
+            color: #ad1457; /* Màu chữ hồng đậm hơi tối */
             margin: 10px 0 0 0;
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: bold;
         }
 
-        /* == HÌNH VẼ TRANG TRÍ (CHÈN SVG TRỰC TIẾP) == */
-        .decorative-item {
-            position: absolute;
-            z-index: 1;
-        }
-        
-        .balloon-group-left {
-            top: 5%;
-            left: 5%;
-            font-size: 80px;
-            animation: floatBalloon 6s ease-in-out infinite;
-        }
-
-        .cake-icon {
-            bottom: 5%;
-            left: 5%;
-            width: 120px;
-            height: 120px;
-        }
-
-        .gift-icon {
-            bottom: 5%;
-            right: 5%;
-            width: 120px;
-            height: 120px;
-            animation: pulseIcon 3s infinite;
-        }
-        
-        @keyframes floatBalloon {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-15px) rotate(5deg); }
-        }
-
-        @keyframes pulseIcon {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.05); opacity: 0.9; }
-        }
-
-        /* == Họa tiết pháo giấy chìm cho viền nền == */
-        .confetti-overlay {
+        /* == THAY ĐỔI 4: HIỆU ỨNG "CƠN MƯA TRÁI TIM RƠI" == */
+        #heart-rain-container {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; /* Không cản trở người dùng */
+            z-index: 10; /* Sau chiếc bánh */
+            opacity: 0.7; /* Trái tim hơi mờ */
+        }
+
+        .falling-heart {
+            position: absolute;
+            color: #ff80ab; /* Màu hồng tươi */
+            font-size: 20px;
             pointer-events: none;
-            z-index: 5;
-            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgdmlld0JveD0iMCAwIDQwIDQwIj48Zz5jaXJjYGUgY3g9IjEwIiBjeT0iMTAiIHI9IjEiIGZpbGw9IiNkODQzMTUiLz48Y2lyY2xlIGN4PSIyMCIgY3k9IjIwIiByPSIwLjgiIGZpbGw9IiM0ZGI2YWMiLz48cmVjdCB4PSIzMCIgeT0iMTAiIHdpZHRoPSI0IiByPSIyIiByeD0iMC41IiByeT0iMC41IiBmaWxsPSIjZjliODI1Ii8+PHJlY3QgeD0iMTAiIHk9IjMwIiB3aWR0aD0iNCIgaGVpZ2h0PSIxIiByeD0iMC41IiByeT0iMC41IiBmaWxsPSIjZjliODI1Ii8+PC9nPjwvc3ZnPg==') repeat;
-            opacity: 0.15;
+            animation: fallDownHeart 5s linear infinite;
+        }
+
+        @keyframes fallDownHeart {
+            0% { top: -5vh; opacity: 1; }
+            100% { top: 105vh; opacity: 0; }
         }
 
         /* ================= MÀN HÌNH CHÚC MỪNG (Ẩn lúc đầu) ================= */
