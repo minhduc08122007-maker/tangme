@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chúc Mừng Sinh Nhật Mẹ Yêu!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%);
+            font-family: 'Quicksand', sans-serif;
+            overflow: hidden;
+        }
+
+        .card {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            z-index: 10;
+            position: relative;
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            color: #d81b60;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .photo-placeholder {
+            width: 150px;
+            height: 150px;
+            background: #eee;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            border: 5px solid #f8bbd0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .photo-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        p {
+            color: #555;
+            line-height: 1.6;
+            font-size: 1.1rem;
+        }
+
+        .btn {
+            background: #d81b60;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.2s;
+            margin-top: 1rem;
+            font-weight: bold;
+        }
+
+        .btn:hover {
+            background: #ad1457;
+            transform: scale(1.05);
+        }
+
+        #hidden-message {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background: #fff3e0;
+            border-radius: 10px;
+            border-left: 5px solid #ffb300;
+            font-style: italic;
+        }
+
+        /* Hiệu ứng trái tim bay */
+        .heart {
+            position: absolute;
+            color: #f48fb1;
+            font-size: 20px;
+            animation: fly 3s linear infinite;
+            opacity: 0;
+        }
+
+        @keyframes fly {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <div class="photo-placeholder">
+            <img src="https://via.placeholder.com/150" alt="Ảnh Mẹ Yêu">
+        </div>
+        <h1>Chúc Mừng Sinh Nhật Mẹ!</h1>
+        <p>Chúc người phụ nữ tuyệt vời nhất đời con luôn mạnh khỏe, vui vẻ và hạnh phúc bên gia đình mình mẹ nhé!</p>
+        
+        <button class="btn" onclick="showMessage()">Nhấn vào đây mẹ nhé ❤️</button>
+
+        <div id="hidden-message">
+            Con cảm ơn mẹ vì tất cả những hy sinh và tình yêu thương mẹ dành cho con. Con yêu mẹ rất nhiều!
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script>
+        function showMessage() {
+            // Hiển thị lời chúc ẩn
+            document.getElementById('hidden-message').style.display = 'block';
+            
+            // Bắn pháo giấy
+            confetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#ff69b4', '#ff1493', '#ffc0cb']
+            });
+
+            // Tạo thêm trái tim bay
+            for(let i=0; i<10; i++) {
+                createHeart();
+            }
+        }
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 3000);
+        }
+    </script>
+</body>
+</html>
